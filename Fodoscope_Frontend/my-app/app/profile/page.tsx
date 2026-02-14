@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ArrowRight, Loader2, User as UserIcon, Database, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, User as UserIcon, Database, CheckCircle2, ScanLine, Compass } from "lucide-react";
 
 // --- CUSTOM ANIMATION CURVE ---
 const ease = [0.76, 0, 0.24, 1];
@@ -18,12 +18,10 @@ const Grain = () => (
 // New Background Textures Component
 const BackgroundTextures = () => (
   <>
-    {/* Top Left Texture */}
     <div className="fixed top-0 left-0 w-[50vw] h-[50vw] md:w-[30vw] md:h-[30vw] opacity-[0.08] pointer-events-none z-0 mix-blend-multiply grayscale contrast-150">
       <Image src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200" alt="texture" fill className="object-cover" unoptimized />
     </div>
-    {/* Bottom Right Texture */}
-     <div className="fixed bottom-0 right-0 w-[60vw] h-[60vw] md:w-[40vw] md:h-[40vw] opacity-[0.08] pointer-events-none z-0 mix-blend-multiply rotate-180 grayscale contrast-150">
+    <div className="fixed bottom-0 right-0 w-[60vw] h-[60vw] md:w-[40vw] md:h-[40vw] opacity-[0.08] pointer-events-none z-0 mix-blend-multiply rotate-180 grayscale contrast-150">
       <Image src="https://images.unsplash.com/photo-1516684732162-798a0062be99?q=80&w=1200" alt="texture" fill className="object-cover" unoptimized />
     </div>
   </>
@@ -115,13 +113,12 @@ export default function Profile() {
         <Link href="/" className="flex items-center gap-4 group text-xs uppercase tracking-[0.2em] font-bold hover:opacity-70 transition-opacity">
           <ArrowLeft size={18} className="transition-transform group-hover:-translate-x-1" /> Return
         </Link>
-        <span className="text-2xl font-serif font-bold tracking-tight">FoodScope</span>
+        <span className="text-2xl font-serif font-bold tracking-tight">Snap2Recipe</span>
       </nav>
 
-      {/* --- HERO HEADER (MINIMIZED TEXT) --- */}
+      {/* --- HERO HEADER --- */}
       <section className="pt-32 pb-12 px-6 md:px-12 max-w-7xl mx-auto relative z-10">
          <RevealText>
-            {/* Reduced from text-6xl/7vw to text-3xl/5xl */}
             <h1 className="text-3xl md:text-5xl font-serif leading-[0.85] tracking-tighter font-bold">
               Account Overview
             </h1>
@@ -131,7 +128,7 @@ export default function Profile() {
       {/* --- BOLD EDITORIAL GRID --- */}
       <section className="px-6 md:px-12 max-w-7xl mx-auto relative z-20">
         
-        {/* Outer Border Box - Thick and structural */}
+        {/* Outer Border Box */}
         <motion.div 
            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease }}
            className="w-full border-2 border-[#1A1A1A] flex flex-col lg:flex-row bg-white shadow-xl"
@@ -144,7 +141,7 @@ export default function Profile() {
                  <span className="font-mono text-sm font-bold uppercase tracking-[0.1em] text-[#1A1A1A]">Identity Record</span>
                </div>
 
-               {/* Avatar - Prominent, full color */}
+               {/* Avatar */}
                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-[#1A1A1A] overflow-hidden mb-10 bg-white flex items-center justify-center shrink-0 shadow-md">
                   {user.avatarUrl ? (
                     <Image 
@@ -164,7 +161,7 @@ export default function Profile() {
                  {user.displayName}
                </h2>
                
-               {/* Details with bold labels */}
+               {/* Details */}
                <div className="space-y-8 font-mono text-sm uppercase mt-auto pt-12 border-t-2 border-[#1A1A1A]/10">
                   <div>
                      <span className="text-[#1A1A1A]/60 font-bold block mb-2 tracking-widest">Registered Email</span>
@@ -179,7 +176,7 @@ export default function Profile() {
                </div>
             </div>
 
-            {/* COLUMN 2: USAGE METRICS (Right Side) */}
+            {/* COLUMN 2: USAGE & ACTIONS (Right Side) */}
             <div className="w-full lg:w-[60%] flex flex-col bg-white/90 backdrop-blur-sm">
                
                {/* Metrics Header */}
@@ -196,69 +193,79 @@ export default function Profile() {
 
                {/* Massive Number Blocks */}
                <div className="flex flex-col sm:flex-row border-b-2 border-[#1A1A1A]">
-                  
-                  {/* Remaining Box */}
-                  <div className="w-full sm:w-1/2 border-b-2 sm:border-b-0 sm:border-r-2 border-[#1A1A1A] p-8 md:p-12 bg-[#FDFCF6]/50 flex flex-col justify-between">
+                  <div className="w-full sm:w-1/2 border-b-2 sm:border-b-0 sm:border-r-2 border-[#1A1A1A] p-8 md:p-10 bg-[#FDFCF6]/50 flex flex-col justify-between">
                      <span className="font-mono text-sm font-bold uppercase tracking-widest text-[#1A1A1A]/60 mb-6 block">Queries Remaining</span>
                      <div className="flex items-baseline gap-2">
-                        <span className="text-8xl md:text-[9rem] font-serif tracking-tighter text-[#A8B545] leading-none font-bold">
+                        <span className="text-8xl md:text-[8rem] font-serif tracking-tighter text-[#A8B545] leading-none font-bold">
                            {remaining}
                         </span>
                      </div>
                   </div>
 
-                  {/* Used Box */}
-                  <div className="w-full sm:w-1/2 p-8 md:p-12 bg-white flex flex-col justify-between">
+                  <div className="w-full sm:w-1/2 p-8 md:p-10 bg-white flex flex-col justify-between">
                      <span className="font-mono text-sm font-bold uppercase tracking-widest text-[#1A1A1A]/60 mb-6 block">Queries Consumed</span>
                      <div className="flex items-baseline gap-2">
-                        <span className="text-8xl md:text-[9rem] font-serif tracking-tighter text-[#1A1A1A] leading-none font-bold">
+                        <span className="text-8xl md:text-[8rem] font-serif tracking-tighter text-[#1A1A1A] leading-none font-bold">
                            {used}
                         </span>
                      </div>
                   </div>
-
                </div>
 
                {/* Visual Progress Bar Row */}
-               <div className="border-b-2 border-[#1A1A1A] p-8 md:p-12 bg-[#FDFCF6]/50">
+               <div className="border-b-2 border-[#1A1A1A] p-8 md:p-10 bg-[#FDFCF6]/50">
                   <div className="flex justify-between font-mono text-xs font-bold uppercase tracking-widest text-[#1A1A1A] mb-4">
                      <span>0 Used</span>
                      <span>Total Capacity: {totalAllocated}</span>
                   </div>
                   
-                  {/* Ultra-Thick Visual Meter */}
                   <div className="w-full h-8 bg-white border-2 border-[#1A1A1A] rounded-full overflow-hidden flex relative shadow-inner">
-                     {/* Used Portion */}
                      <motion.div 
                        initial={{ width: 0 }} animate={{ width: `${usedPercentage}%` }} transition={{ duration: 1.5, ease, delay: 0.2 }}
                        className="h-full bg-[#1A1A1A] relative z-10 border-r-2 border-[#1A1A1A]"
                      />
-                     {/* Remaining Portion */}
                      <div className="h-full bg-[#A8B545] flex-grow opacity-50" />
                   </div>
-
-                  <p className="mt-8 font-serif text-2xl text-[#1A1A1A]/80">
-                    You have utilized <span className="font-bold text-[#1A1A1A]">{usedPercentage.toFixed(0)}%</span> of your available API allowance.
-                  </p>
                </div>
 
-               {/* Actions Row (Logout) - MINIMIZED TEXT */}
-               <div className="bg-[#1A1A1A] group cursor-pointer h-full flex" onClick={handleLogout}>
-                  <button 
-                    disabled={isLoggingOut}
-                    className="w-full p-6 md:p-8 flex items-center justify-between text-[#FDFCF6] relative overflow-hidden"
-                  >
-                     <div className="absolute inset-0 bg-[#C26D5C] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[0.76,0,0.24,1]" />
-                     
-                     {/* Reduced from text-4xl/5xl to text-xl/2xl */}
-                     <span className="relative z-10 font-serif text-xl md:text-2xl tracking-tight font-bold uppercase">
-                       {isLoggingOut ? "Disconnecting..." : "Terminate Session"}
-                     </span>
-                     
-                     <div className="relative z-10 bg-white/10 p-3 rounded-full group-hover:bg-white group-hover:text-[#C26D5C] transition-colors duration-500">
-                        {/* Reduced icon size from 32 to 20 */}
-                        {isLoggingOut ? <Loader2 size={20} className="animate-spin" /> : <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-500" />}
+               {/* Interactive App Navigation Blocks (New Feature) */}
+               <div className="flex flex-col sm:flex-row border-b-2 border-[#1A1A1A]">
+                  
+                  {/* Analyze Navigation */}
+                  <Link href="/analyze" className="w-full sm:w-1/2 p-8 md:p-10 border-b-2 sm:border-b-0 sm:border-r-2 border-[#1A1A1A] bg-white hover:bg-[#A8B545] transition-colors duration-500 group flex flex-col justify-between">
+                     <div className="flex items-center gap-3 mb-10">
+                        <ScanLine size={18} className="text-[#1A1A1A]/60 group-hover:text-[#1A1A1A] transition-colors" />
+                        <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#1A1A1A]/60 group-hover:text-[#1A1A1A] transition-colors">Computer Vision</span>
                      </div>
+                     <div className="flex items-center justify-between">
+                        <span className="font-serif text-3xl md:text-4xl tracking-tight font-bold">Scan Fridge</span>
+                        <ArrowRight size={28} className="group-hover:translate-x-2 transition-transform duration-500" />
+                     </div>
+                  </Link>
+
+                  {/* Discover Navigation */}
+                  <Link href="/discover" className="w-full sm:w-1/2 p-8 md:p-10 bg-[#FDFCF6] hover:bg-[#C26D5C] hover:text-[#FDFCF6] transition-colors duration-500 group flex flex-col justify-between">
+                     <div className="flex items-center gap-3 mb-10">
+                        <Compass size={18} className="text-[#1A1A1A]/60 group-hover:text-[#FDFCF6] transition-colors" />
+                        <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#1A1A1A]/60 group-hover:text-[#FDFCF6] transition-colors">Database</span>
+                     </div>
+                     <div className="flex items-center justify-between">
+                        <span className="font-serif text-3xl md:text-4xl tracking-tight font-bold">Explore Menu</span>
+                        <ArrowRight size={28} className="group-hover:translate-x-2 transition-transform duration-500" />
+                     </div>
+                  </Link>
+
+               </div>
+
+               {/* Minimized Terminate Session Button (At Last) */}
+               <div className="bg-[#FDFCF6]/80 p-6 flex justify-end mt-auto rounded-br-md">
+                  <button 
+                    onClick={handleLogout}
+                    disabled={isLoggingOut}
+                    className="flex items-center gap-3 font-mono text-xs font-bold uppercase tracking-widest text-[#1A1A1A]/50 hover:text-red-700 transition-colors group"
+                  >
+                     <span>{isLoggingOut ? "Disconnecting..." : "Terminate Session"}</span>
+                     {isLoggingOut ? <Loader2 size={16} className="animate-spin" /> : <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />}
                   </button>
                </div>
 

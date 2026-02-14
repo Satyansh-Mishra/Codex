@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const limit = searchParams.get('limit') || '12';
 
   // Securely stored token (Move to .env in production)
-  const API_TOKEN = "PNnVpY5KTsA2iFVGbkTHopjkVTCMyLynO3NRz5gLGVi_526l";
+  const API_TOKEN = "lBxuLl-Zgf8WPQttuPq2Rf8EyjXJEnWM4izfkFTSlCciwvh8";
 
   let url = "";
   
