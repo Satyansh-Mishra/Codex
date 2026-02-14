@@ -91,7 +91,9 @@ export default function Login() {
 
       localStorage.setItem("accessToken", data.data.accessToken);
       localStorage.setItem("user", JSON.stringify(data.data.user));
-      router.push("/");
+      
+      // Changed redirect path to /profile
+      router.push("/profile"); 
     } catch (err: any) {
       setError(err.message);
     } finally {
