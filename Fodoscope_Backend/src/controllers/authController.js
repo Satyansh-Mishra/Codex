@@ -62,7 +62,7 @@ const signup = async (req, res) => {
   // Merge + delete guest session if one exists
   await _mergeGuestSession(req, res);
 
-  console.log(`👤 New user signed up: ${email}`);
+  // console.log(`👤 New user signed up: ${email}`);
 
   return res.status(201).json(
     new ApiResponse(201, "Account created successfully!", {
@@ -123,7 +123,7 @@ const login = async (req, res) => {
   // Merge + delete guest session if one exists
   await _mergeGuestSession(req, res);
 
-  console.log(`✅ User logged in: ${email}`);
+  // console.log(`✅ User logged in: ${email}`);
 
   return res.status(200).json(
     new ApiResponse(200, "Login successful", {

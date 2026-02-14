@@ -70,6 +70,117 @@ const getRecipesFromDetections = async (detections = []) => {
   }
 };
 
+const getRecipeDescriptionById = async (recipeId) => {
+  try {
+    if (!recipeId) {
+      throw new ApiError(400, "Recipe ID is required");
+    }
+
+    /* -----------------------------
+       1️⃣ Get Recipe Info
+    ------------------------------*/
+    const recipeRes = await recipeClient.get(
+      `/recipe2-api/search-recipe/${recipeId}`
+    );
+
+    const recipeData = recipeRes.data;
+
+    if (!recipeData?.recipe) {
+      throw new ApiError(404, "Recipe not found");
+    }
+
+    /* -----------------------------
+       2️⃣ Get Instructions
+    ------------------------------*/
+    const stepsRes = await recipeClient.get(
+      `/recipe2-api/instructions/${recipeId}`
+    );
+
+    const stepsData = stepsRes.data;
+
+    /* -----------------------------
+       3️⃣ Clean & Merge Data
+    ------------------------------*/
+
+    const recipe = recipeData.recipe;
+    const ingredientsRaw = recipeData.ingredients || [];
+    const stepsRaw = stepsData?.steps || [];
+
+    // Clean ingredients
+    const ingredients = ingredientsRaw.map((item) => ({
+      name: item.ingredient,
+      quantity: item.quantity || null,
+      unit: item.unit || null,
+      state: item.state || null,
+      phrase: item.ingredient_Phrase,
+    }));
+
+    // Clean steps
+    const steps = stepsRaw.map((step, index) => ({
+      stepNumber: index + 1,
+      instruction: step,
+    }));
+
+    /* -----------------------------
+       4️⃣ Final Structured Response
+    ------------------------------*/
+    const result = {
+      id: recipe.Recipe_id,
+      title: recipe.Recipe_title,
+
+      cuisine: {
+        region: recipe.Region,
+        subRegion: recipe.Sub_region,
+        continent: recipe.Continent,
+      },
+
+      time: {
+        prep: recipe.prep_time + " min",
+        cook: recipe.cook_time + " min",
+        total: recipe.total_time + " min",
+      },
+
+      servings: recipe.servings,
+
+      nutrition: {
+        calories: recipe.Calories,
+        energy: recipe["Energy (kcal)"],
+        protein: recipe["Protein (g)"],
+        fat: recipe["Total lipid (fat) (g)"],
+        carbs: recipe["Carbohydrate, by difference (g)"],
+      },
+
+      dietType: {
+        vegan: recipe.vegan === "1.0",
+        vegetarian: recipe.lacto_vegetarian === "1.0",
+        ovoVegetarian: recipe.ovo_vegetarian === "1.0",
+      },
+
+      utensils: recipe.Utensils?.split("||") || [],
+      processes: recipe.Processes?.split("||") || [],
+
+      ingredients,
+
+      instructions: steps,
+    };
+
+    return result;
+
+  } catch (error) {
+    console.error("Recipe Description Error:", error.message);
+
+    if (error.response) {
+      console.error("API Response:", error.response.data);
+    }
+
+    throw new ApiError(
+      500,
+      "Failed to fetch recipe description"
+    );
+  }
+};
+
 module.exports = {
   getRecipesFromDetections,
+  getRecipeDescriptionById,
 };

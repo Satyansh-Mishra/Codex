@@ -5,7 +5,7 @@ const path = require("path");
 
 const authRoutes   = require("./routes/authRoutes.js");
 const aiRouter     = require("./routes/aiRoutes.js");
-// const recipeRoutes = require("./routes/recipeRoutes");
+const recipeRoutes = require("./routes/recipeRoutes");
 const trialRoutes  = require("./routes/trialRoutes.js");
 const ApiError     = require("./utils/ApiError.js");
 
@@ -47,7 +47,7 @@ app.get("/api/health", (req, res) => {
 // ─────────────────────────────────────────────
 app.use("/api/auth",    authRoutes);
 app.use("/api/ai",      aiRouter);
-// app.use("/api/recipes", recipeRoutes);
+app.use("/api/recipes", recipeRoutes);
 app.use("/api/trials",  trialRoutes);
 
 // ─────────────────────────────────────────────
