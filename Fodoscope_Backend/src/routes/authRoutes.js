@@ -15,13 +15,13 @@ const {
   login,
   getMe,
   logout,
-} = require("../controllers/authController");
+} = require("../controllers/authController.js");
 
-const { createGuestSession } = require("../controllers/authController");
+const { createGuestSession } = require("../controllers/authController.js");
 
-const supabaseAuth = require("../middleware/supabaseAuthMiddleware");
-const guestMiddleware = require("../middleware/guestMiddleware");
-const asyncHandler = require("../utils/asyncHandler");
+const supabaseAuth = require("../middleware/supabaseAuthMiddleware.js");
+const guestMiddleware = require("../middleware/guestMiddleware.js");
+const asyncHandler = require("../utils/asyncHandler.js");
 
 // ── Public routes (no token needed) ──
 router.post("/signup", asyncHandler(signup));

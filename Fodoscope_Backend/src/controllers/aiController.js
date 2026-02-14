@@ -25,14 +25,13 @@ const analyzeFood = async (req, res) => {
 
   const response = await getRecipesFromDetections(aiResult.detections);
 
+  const rankedRecipes = await rankRecipesByFlavorPairing(aiResult.detections, response);
+
   console.log(response)
   return res.status(200).json(
     new ApiResponse(200, "Image analyzed successfully", {
-      uploadedImage: imageUrl,
-      modelImage: aiResult.imageSource,
-      totalDetections: aiResult.totalDetections,
-      detectedItems: aiResult.detections,
-      recipies: response,
+      detectedIngredients: detected,
+      pairingBasedRecipes: rankedRecipes.slice(0, 3),
     })
   );
 };
